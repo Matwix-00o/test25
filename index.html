@@ -1,29 +1,30 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Login Seite</title>
+  <title>Login</title>
 </head>
 <body>
-    <h1>Login</h1>
-    <form id="loginForm">
-        <input type="password" id="password" placeholder="Passwort eingeben">
-        <button type="submit">Login</button>
-    </form>
-    <p id="message"></p>
+  <h1>Login</h1>
+  <form id="loginForm">
+    <input name="username" placeholder="Benutzername" required><br>
+    <input name="password" type="password" placeholder="Passwort" required><br>
+    <button type="submit">Anmelden</button>
+  </form>
 
-    <script>
-    document.getElementById('loginForm').addEventListener('submit', async function(event) {
-        event.preventDefault();
-        const password = document.getElementById('password').value;
-        const response = await fetch('https://dea0acd1-715e-4193-9108-7b9278978b63-00-29fztbdhjquq3.picard.replit.dev/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ password })
-        });
-        const result = await response.json();
-        document.getElementById('message').innerText = result.message;
+  <p id="antwort"></p>
+
+  <script>
+    const form = document.getElementById("loginForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const formData = new FormData(form);
+      const response = await fetch("https://https://dea0acd1-715e-4193-9108-7b9278978b63-00-29fztbdhjquq3.picard.replit.dev/login", {
+        method: "POST",
+        body: formData
+      });
+      const text = await response.text();
+      document.getElementById("antwort").innerText = text;
     });
-    </script>
+  </script>
 </body>
 </html>
